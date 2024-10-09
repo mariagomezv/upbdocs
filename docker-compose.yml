@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: upbdocs
+      POSTGRES_USER: upbdocs
+      POSTGRES_PASSWORD: unaClav3
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/upbdocs
+      SPRING_DATASOURCE_USERNAME: upbdocs
+      SPRING_DATASOURCE_PASSWORD: unaClav3
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  postgres_data:
