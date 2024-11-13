@@ -4,6 +4,8 @@ WORKDIR /app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 COPY src ./src
+
+# Cambiamos los permisos del script mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Para depurar y verificar si el .jar se genera correctamente
